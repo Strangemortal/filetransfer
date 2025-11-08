@@ -16,6 +16,8 @@ class FileTransfer(models.Model):
     description = models.TextField(blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
+    auto_delete = models.BooleanField(default=False)
+    opened_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ['-uploaded_at']

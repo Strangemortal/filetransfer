@@ -9,10 +9,15 @@ class FileTransferForm(forms.ModelForm):
         max_length=150,
         help_text='Enter the username of the receiver'
     )
+    auto_delete = forms.BooleanField(
+        required=False,
+        initial=False,
+        help_text='Automatically delete file 10 minutes after recipient opens it'
+    )
 
     class Meta:
         model = FileTransfer
-        fields = ['file', 'description', 'receiver_username']
+        fields = ['file', 'description', 'receiver_username', 'auto_delete']
         widgets = {
             'description': forms.Textarea(attrs={'rows': 3}),
         }
