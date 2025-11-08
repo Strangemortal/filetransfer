@@ -1,0 +1,42 @@
+{% extends 'transfer/base.html' %}
+
+{% block title %}Home - File Transfer{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ user.username }}!</h1>
+<p><a href="{% url 'upload_file' %}" class="btn">Upload New File</a></p>
+
+<div class="file-list">
+    <h2>Received Files ({{ received_files.count }})</h2>
+    {% if received_files %}
+        {% for file in received_files %}
+        <div class="file-item">
+            <p><strong>From:</strong> {{ file.sender.username }}</p>
+            <p><strong>File:</strong> <a href="{% url 'file_detail' file.pk %}">{{ file.file.name }}</a></p>
+            <p><strong>Date:</strong> {{ file.uploaded_at|date:"Y-m-d H:i" }}</p>
+            {% if not file.is_read %}
+            <span style="color: #667eea; font-weight: bold;">● New</span>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No files received yet.</p>
+    {% endif %}
+</div>
+
+<div class="file-list">
+    <h2>Sent Files ({{ sent_files.count }})</h2>
+    {% if sent_files %}
+        {% for file in sent_files %}
+        <div class="file-item">
+            <p><strong>To:</strong> {{ file.receiver.username }}</p>
+            <p><strong>File:</strong> <a href="{% url 'file_detail' file.pk %}">{{ file.file.name }}</a></p>
+            <p><strong>Date:</strong> {{ file.uploaded_at|date:"Y-m-d H:i" }}</p>
+            <p><strong>Status:</strong> {% if file.is_read %}Read{% else %}Unread{% endif %}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No files sent yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

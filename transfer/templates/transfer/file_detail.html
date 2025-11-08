@@ -1,0 +1,19 @@
+{% extends 'transfer/base.html' %}
+
+{% block title %}File Detail - File Transfer{% endblock %}
+
+{% block content %}
+<h1>File Details</h1>
+<div class="file-item" style="margin-top: 20px;">
+    <p><strong>Sender:</strong> {{ file_transfer.sender.username }}</p>
+    <p><strong>Receiver:</strong> {{ file_transfer.receiver.username }}</p>
+    <p><strong>File:</strong> <a href="{{ file_transfer.file.url }}" download>{{ file_transfer.file.name }}</a></p>
+    <p><strong>Description:</strong> {{ file_transfer.description|default:"No description provided" }}</p>
+    <p><strong>Uploaded:</strong> {{ file_transfer.uploaded_at|date:"Y-m-d H:i:s" }}</p>
+    <p><strong>Status:</strong> {% if file_transfer.is_read %}Read{% else %}Unread{% endif %}</p>
+</div>
+<p style="margin-top: 20px;">
+    <a href="{{ file_transfer.file.url }}" class="btn" download>Download File</a>
+    <a href="{% url 'home' %}" style="margin-left: 10px;">Back to Home</a>
+</p>
+{% endblock %}
